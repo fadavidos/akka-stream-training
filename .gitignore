@@ -1,4 +1,8 @@
 *.class
 *.log
+.bsp
+.idea
+target
 .bsp/*
 .idea/*
+target/*
