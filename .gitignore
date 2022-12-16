@@ -1,8 +1,14 @@
 *.class
 *.log
+.cache
+.ivy2
+.npm
+.m2
+.sbt
 .bsp
 .idea
 target
+project/target
 .bsp/*
 .idea/*
-target/*
+*/target/*
