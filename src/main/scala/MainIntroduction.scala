@@ -34,6 +34,7 @@ object MainIntroduction extends App {
     Tweet(Author("appleman"), System.currentTimeMillis, "#apples rock!") ::
     Tweet(Author("drama"), System.currentTimeMillis, "we compared #apples to #oranges!") ::
     Nil
+  )
 
   implicit val system: ActorSystem = ActorSystem.create("introduction")
 
