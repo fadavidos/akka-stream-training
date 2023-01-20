@@ -39,23 +39,23 @@ object Step02MainIntroduction extends App {
   implicit val system: ActorSystem = ActorSystem.create("introduction")
 
 
-  val printlnTweetFlow = Flow[Tweet].map{x =>
+  val printlnTweetFlow: Flow[Tweet, Tweet, NotUsed] = Flow[Tweet].map{ x =>
     println(s"-> [printlnTweetFlow] -> ${x}")
     x
   }
 
-  val printlnHasgtagFlow = Flow[Hashtag].map{x =>
+  val printlnHashtagFlow = Flow[Hashtag].map{x =>
     println(s"-> [printlnHasgtagFlow] -> ${x}")
     x
   }
 
   tweets
     .filterNot(_.hashtags.contains(akkaTag)) // Remove all tweets containing #akka hashtag
-    .via(printlnTweetFlow)
+    .via(printlnTweetFlow) // Flow to print each result
     .map(_.hashtags) // Get all sets of hashtags ...
     .reduce(_ ++ _) // ... and reduce them to a single set, removing duplicates across all tweets
     .mapConcat(identity) // Flatten the set of hashtags to a stream of hashtags
-    .via(printlnHasgtagFlow)
+    .via(printlnHashtagFlow) // Flow to print each hashtag
     .map(_.name.toUpperCase) // Convert all hashtags to upper case
     .runWith(Sink.foreach(println)) // Attach the Flow to a Sink that will finally print the hashtags
 

@@ -15,7 +15,7 @@ publisher   processor   subscriber
 source      flow        sink
  */
 
-object Step04MainBackpressure extends App {
+object Step0XMainBackpressure extends App {
 
   implicit val system = ActorSystem.create("akka-stream-system")
 
