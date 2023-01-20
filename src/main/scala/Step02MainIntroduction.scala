@@ -4,7 +4,7 @@ import akka.NotUsed
 import akka.actor.ActorSystem
 import akka.stream.scaladsl.{Flow, Sink, Source}
 
-object MainIntroduction extends App {
+object Step02MainIntroduction extends App {
 
   final case class Author(handle: String)
 

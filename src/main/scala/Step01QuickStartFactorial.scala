@@ -10,7 +10,7 @@ import akka.util.ByteString
 
 import java.nio.file.Paths
 
-object QuickStartFactorial extends App {
+object Step01QuickStartFactorial extends App {
 
   implicit val system: ActorSystem = ActorSystem("Quickstart")
   implicit val ec = system.dispatcher
