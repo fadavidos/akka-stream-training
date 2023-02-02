@@ -10,7 +10,6 @@ object Step04ZippingSources extends App with Factorial {
 
   implicit val actorSystem: ActorSystem = ActorSystem("Zipping")
 
-
   def createStringG[A, B]: Flow[(A, B), String, NotUsed] =
     Flow[(A, B)].map(t => s"${t._1} != ${t._2}")
 
