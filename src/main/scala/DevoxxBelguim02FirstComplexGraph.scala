@@ -19,12 +19,14 @@ object DevoxxBelguim02FirstComplexGraph extends DevoxxBelguim {
   val complexGraph = GraphDSL.create(){ implicit builder =>
     import GraphDSL.Implicits._
 
+    // 'builder' allows us create components of the Graph and connections between them
+
     val broadcast = builder.add(Broadcast[Int](2))
     val zipper = builder.add(Zip[Int, Int])
 
     source ~> broadcast ~> incrementer ~> zipper.in0
-              broadcast ~> doubler ~> zipper.in1
-                                      zipper.out ~> output
+              broadcast ~> doubler     ~> zipper.in1
+                                          zipper.out ~> output
 
     ClosedShape
   }
