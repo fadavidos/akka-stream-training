@@ -27,7 +27,7 @@ object DevoxxBelguim03BankGraph {
    */
 
   val suspicionThreshold = 10000
-  val blacklist = Set("badguy", "badlady", "yourkid")
+  val blacklist = Set("badguy", "badlady", "yourkids")
   val transactions = List(
     Transaction(30, "goodguy1", "goodguy2", 0),
     Transaction(30000, "goodguy1", "badguy", 0),
@@ -49,9 +49,21 @@ object DevoxxBelguim03BankGraph {
       val txnSource = builder.add(Source(transactions))
       val broadcast = builder.add(Broadcast[Transaction](3))
 
-      val amountDetector = builder.add(Flow[Transaction].filter(txn => txn.amount > suspicionThreshold))
-      val blacklistedDetector = builder.add(Flow[Transaction].filter(txn => blacklist.contains(txn.receiver)))
-      val dateDetector = builder.add(Flow[Transaction].filter(txn => txn.date > 1000))
+      val amountDetector = builder.add(
+        Flow[Transaction]
+          .filter(txn => txn.amount > suspicionThreshold)
+          .wireTap(txn => println(s"Suspicious txn: improper amount ${txn}"))
+      )
+      val blacklistedDetector = builder.add(
+        Flow[Transaction]
+          .filter(txn => blacklist.contains(txn.receiver))
+          .wireTap(txn => println(s"Suspicious txn: blacklisted ${txn}"))
+      )
+      val dateDetector = builder.add(
+        Flow[Transaction]
+          .filter(txn => txn.date > 1000)
+          .wireTap(txn => println(s"Suspicious txn: weird date ${txn}"))
+      )
 
       // visual graph
       txnSource ~>  broadcast ~>  amountDetector ~> amountSink
